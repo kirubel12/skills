@@ -172,6 +172,177 @@
           ]
         }
       ]
+    },
+    "skill-router": {
+      "should_trigger": [
+        "what should I run next",
+        "which skill do I use for this",
+        "where am I in the workflow"
+      ],
+      "should_not_trigger": [
+        "fix this crash",
+        "write a PR description"
+      ],
+      "tests": [
+        {
+          "prompt": "I just finished brainstorming the checkout redesign. What now?",
+          "expectations": [
+            "Reads AGENTS.md and the newest notes before answering",
+            "Quotes the evidence (a note path or profile fact)",
+            "Recommends exactly one next skill (task-graph) and at most two side entries",
+            "Reads the recommended skill's SKILL.md first",
+            "Reply is 8 lines or fewer"
+          ]
+        }
+      ]
+    },
+    "task-graph": {
+      "should_trigger": [
+        "write a spec for this feature",
+        "break this down into tasks",
+        "create tickets for the offline sync work"
+      ],
+      "should_not_trigger": [
+        "debug this error",
+        "open a PR"
+      ],
+      "tests": [
+        {
+          "prompt": "We decided on offline-first sync. Turn it into a spec and tasks. Tracker is Linear, key ENG.",
+          "expectations": [
+            "Reads the latest branch-storm note",
+            "Task 1 is a thin end-to-end slice, not a layer",
+            "Every task has pass or fail acceptance criteria and a Blocked by line",
+            "Lists the frontier and checks for cycles",
+            "Shows the spec and tasks and waits before writing or creating tickets",
+            "Saves a note under .agent-notes/task-graph/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "tdd-loop": {
+      "should_trigger": [
+        "implement the login form",
+        "add this feature test-first",
+        "write tests for the cart service"
+      ],
+      "should_not_trigger": [
+        "audit my UI",
+        "plan the release"
+      ],
+      "tests": [
+        {
+          "prompt": "Implement task 01: user can add an item to the cart.",
+          "expectations": [
+            "Restates acceptance criteria as observable behaviors",
+            "Writes one failing test first and shows it failing for the expected reason",
+            "Writes minimal code, then runs the test",
+            "Does not write all tests up front",
+            "Mocks only at system boundaries",
+            "Runs lint, types and the full suite and reports real results",
+            "Saves a note under .agent-notes/tdd-loop/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "diff-review": {
+      "should_trigger": [
+        "review my changes before I open a PR",
+        "is this ready to merge",
+        "check my diff"
+      ],
+      "should_not_trigger": [
+        "brainstorm names",
+        "set up this repo"
+      ],
+      "tests": [
+        {
+          "prompt": "Review my branch before I ship it.",
+          "expectations": [
+            "Runs the profile's checks and reports real results",
+            "Maps each acceptance criterion to code and a test",
+            "Every finding has a file:line and evidence and was verified by reading the code",
+            "Separates problems the diff introduced from pre-existing ones",
+            "Ends with a verdict: ready, ready with notes or fix first",
+            "Does not edit code unless asked",
+            "Saves a note under .agent-notes/diff-review/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "release-gate": {
+      "should_trigger": [
+        "are we ready to release",
+        "pre-release checklist",
+        "cut a release"
+      ],
+      "should_not_trigger": [
+        "fix this bug",
+        "write the PR body"
+      ],
+      "tests": [
+        {
+          "prompt": "Run the release checklist for the Flutter app.",
+          "expectations": [
+            "Suggests a semver bump from the commit types since the last tag",
+            "Drafts a changelog from commit subjects",
+            "Marks each checklist item pass, fail or unknown with evidence, never assumed",
+            "Lists one-way doors and a rollback plan",
+            "States GO, GO with risks or NO-GO",
+            "Does not tag, publish or deploy",
+            "Saves a note under .agent-notes/release-gate/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "agent-handoff": {
+      "should_trigger": [
+        "hand this off to another agent",
+        "save my progress, I'll continue tomorrow",
+        "write a handoff note"
+      ],
+      "should_not_trigger": [
+        "review my diff",
+        "brainstorm ideas"
+      ],
+      "tests": [
+        {
+          "prompt": "Hand this off. Next session will finish the tests.",
+          "expectations": [
+            "Links other notes instead of duplicating them",
+            "Records decisions with reasons and what was tried and failed",
+            "Every command and path in the note was verified",
+            "Redacts secrets",
+            "Ends with a one-line starter prompt",
+            "Saves a note under .agent-notes/agent-handoff/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "peer-sync": {
+      "should_trigger": [
+        "what did my partner do since my last commit",
+        "did anyone push",
+        "catch me up on the repo"
+      ],
+      "should_not_trigger": [
+        "write a commit message",
+        "debug this crash"
+      ],
+      "tests": [
+        {
+          "prompt": "What did my teammates push since my last commit?",
+          "expectations": [
+            "Uses the date of the user's last commit as the anchor and says so",
+            "Runs git fetch only and never pulls, merges or rebases",
+            "States that only pushed commits are visible, not local or uncommitted work",
+            "Groups pushed commits per person and branch with a short summary",
+            "Reports overlap with the user's changed files and the merge-tree conflict probe result",
+            "Uses names, not email addresses, in the saved note",
+            "Saves a note under .agent-notes/peer-sync/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
     }
   }
 }

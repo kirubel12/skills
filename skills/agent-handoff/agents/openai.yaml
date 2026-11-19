@@ -1,0 +1,5 @@
+interface:
+  display_name: "Agent Handoff"
+  short_description: "Write a handoff note for the next session"
+policy:
+  allow_implicit_invocation: false

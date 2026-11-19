@@ -46,5 +46,8 @@ Project-specific traps only. Example: "Run `dart run build_runner build` after e
 Skill output is saved to `.agent-notes/<skill>/`. Read a skill's folder before repeating its work.
 
 ## Agent skills
-Installed via the skills CLI. These skills read the Profile block above.
+Installed via the skills CLI. These skills read the Profile block above and save notes under `.agent-notes/<skill>/`.
+Flow: `repo-scout` > `branch-storm` > `task-graph` > `tdd-loop` > `diff-review` > `shipwright` > `release-gate`.
+Side entries: `bug-hunter`, `pixel-audit`, `frame-budget`, `prompt-compiler`, `peer-sync`, `agent-handoff`. Unsure where you are: `skill-router`.
+Stack packs: skills pick `references/stacks/<stack>.md` from the `stack` value above. No pack for your stack means general checks only.
 ````

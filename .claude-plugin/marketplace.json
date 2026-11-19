@@ -1,0 +1,21 @@
+{
+  "name": "flowkit",
+  "owner": {
+    "name": "flowkit"
+  },
+  "description": "Agent skills for the whole engineering workflow, as an installable Claude Code plugin.",
+  "plugins": [
+    {
+      "name": "flowkit",
+      "source": "./",
+      "description": "Skills from brainstorm to release: repo setup, specs, TDD, debugging, review, PRs, release checks, team sync.",
+      "category": "engineering",
+      "keywords": [
+        "engineering",
+        "workflow",
+        "tdd",
+        "code-review"
+      ]
+    }
+  ]
+}

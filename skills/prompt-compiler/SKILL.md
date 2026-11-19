@@ -26,7 +26,7 @@ Constraints: <what to preserve, conventions, versions>
 Acceptance criteria: <checkable statements, each pass or fail>
 Out of scope: <what not to touch>
 Verify: <exact commands from the profile, e.g. flutter test, pnpm lint>
-Suggested skills: <bug-hunter for failures, pixel-audit for UI, frame-budget for Flutter perf, branch-storm for open design questions, shipwright to open the PR>
+Suggested skills: <bug-hunter for failures, tdd-loop to build, pixel-audit or frame-budget for UI, branch-storm for open design questions, task-graph to plan, diff-review before the PR, shipwright to open it>
 ```
 
 5. **Flag assumptions** in a separate list under the prompt: `Assumed (delete if wrong): ...`. Never slip an invented requirement into the prompt body.
@@ -63,4 +63,4 @@ Write the result to `<notes_dir>/prompt-compiler/` (default `.agent-notes/`; `no
 - One file per run. Never overwrite an earlier run's file.
 - Create the folder on first write. Do not mention a missing folder.
 - Redact secrets before writing.
-- Finish with one line: `Saved: <path>`.
+- Finish with one line: `Saved: <path>`, then Next: the first skill in the compiled prompt's Suggested skills.

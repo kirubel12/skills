@@ -46,4 +46,4 @@ Write the result to `<notes_dir>/pixel-audit/` (default `.agent-notes/`; `notes_
 - One file per run. Never overwrite an earlier run's file.
 - Create the folder on first write. Do not mention a missing folder.
 - Redact secrets before writing.
-- Finish with one line: `Saved: <path>`.
+- Finish with one line: `Saved: <path>`, then `Next: diff-review`.

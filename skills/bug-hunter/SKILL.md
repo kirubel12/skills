@@ -59,4 +59,4 @@ Write the result to `<notes_dir>/bug-hunter/` (default `.agent-notes/`; `notes_d
 - One file per run. Never overwrite an earlier run's file.
 - Create the folder on first write. Do not mention a missing folder.
 - Redact secrets before writing.
-- Finish with one line: `Saved: <path>`.
+- Finish with one line: `Saved: <path>`, then `Next: diff-review`.

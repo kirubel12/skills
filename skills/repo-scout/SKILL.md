@@ -47,4 +47,4 @@ Write the result to `<notes_dir>/repo-scout/` (default `.agent-notes/`; `notes_d
 - `overview.md` is updated in place (history lives in git). Never delete the user's own notes.
 - Create the folder on first write. Do not mention a missing folder.
 - Redact secrets before writing.
-- Finish with one line: `Saved: <path>`.
+- Finish with one line: `Saved: <path>`, then `Next: branch-storm`.

@@ -17,7 +17,7 @@ Commit, push and PR creation are outward-facing. Only do the steps the user aske
 
 ## Workflow
 
-1. **Preflight.** `git status`, current branch, upstream, remote host. If on the default branch, propose a branch named from `branch_format` (with the ticket key when there is one). Never commit to the default branch without being told to.
+1. **Preflight.** Read the latest notes in `<notes_dir>/diff-review/` and `<notes_dir>/tdd-loop/`. If the review verdict is `fix first`, say so and ask before going on. Reuse their results as PR evidence. `git status`, current branch, upstream, remote host. If on the default branch, propose a branch named from `branch_format` (with the ticket key when there is one). Never commit to the default branch without being told to.
 2. **Self-review the diff** against the base branch. Check for: secrets or `.env` values, debug leftovers (`print`, `console.log`, `dd(`, `[BH-` tags), unrelated changes, missing tests, generated files that should not be committed. Fix or report each finding.
 3. **Run the checks** from the profile (lint, test). Report real results. If a check fails, stop and say so, do not open the PR.
 4. **Commit** with conventional commits (spec in the reference). Split unrelated changes into separate commits. Subject in imperative mood, 72 characters or fewer, body explains why. Add any attribution lines the environment instructs, never invent your own.
@@ -39,4 +39,4 @@ Write the result to `<notes_dir>/shipwright/` (default `.agent-notes/`; `notes_d
 - One file per run. Never overwrite an earlier run's file.
 - Create the folder on first write. Do not mention a missing folder.
 - Redact secrets before writing.
-- Finish with one line: `Saved: <path>`.
+- Finish with one line: `Saved: <path>`, then `Next: release-gate` when this is a release (otherwise done).
