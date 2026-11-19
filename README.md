@@ -1,27 +1,118 @@
 # Skills
 
-Agent skills for the whole engineering workflow, from the first idea to the release. They use the open `SKILL.md` format, so they work in Claude Code, Codex, Cursor and other agents that support skills.
+**14 skills that make your AI coding agent work like a careful engineer, from the first idea to the release.**
 
-Install once and you have a skill for every stage. Not sure which to run? Ask `skill-router`.
+Install them once. Then you can tell your agent, in plain words, to plan a feature, build it test-first, fix a bug, review your code, open a pull request or check a release, and it follows a proven routine instead of improvising.
 
-## What goes wrong, and which skill fixes it
+They work in Claude Code, Codex, Cursor and other agents that support the `SKILL.md` format.
 
-| The agent... | Skill |
+## What you get, in plain words
+
+- **Your agent knows your project.** One setup step records your stack, commands, git host and conventions. No skill asks you again.
+- **It follows a routine, not a guess.** Debugging starts by reproducing the bug. Building starts with a failing test. Reviews cite exact lines.
+- **Every result is saved as a markdown file in your project**, in a folder named after the skill. A teammate, or the same agent tomorrow, can read it and continue.
+- **Nothing risky happens unasked.** No commit, push, PR, tag, deploy or pull unless you tell it to.
+- **Works for a team.** `peer-sync` tells you what your partners pushed while you worked.
+
+## See it in action
+
+You type:
+
+```text
+Use shipwright: create branch feat/ENG-42-cart-rounding, commit my changes with
+conventional commits, push, and open a PR into main. Ticket ENG-42 (Linear).
+Open it as a draft.
+```
+
+The skill:
+
+1. Reads your project profile (`AGENTS.md`) and your latest review notes.
+2. Checks your diff for secrets, debug leftovers and unrelated changes, then runs your lint and tests.
+3. Creates the branch, writes conventional commits (`fix(cart): round totals to cents`).
+4. Writes the PR body to `.agent-notes/shipwright/feat-eng-42-cart-rounding.body.md` and shows you the plan.
+5. Pushes and opens a draft PR on GitHub, GitLab or Bitbucket, linked to `ENG-42`.
+
+## Quick start
+
+1. **Install** (see [Installation](#installation)).
+2. **Run `repo-scout` once per project:**
+   ```text
+   Run repo-scout on this repo. It's a Flutter app, GitHub, tickets in Linear (key ENG), conventional commits.
+   ```
+   It writes `AGENTS.md`, which every agent reads.
+3. **Not sure what to do next?**
+   ```text
+   Use skill-router. I just finished the spec, what now?
+   ```
+
+## How to write a prompt
+
+Every prompt follows one formula: **skill name + goal + what the repo can't tell it + what "done" looks like.**
+
+| Part | Why | Example |
+|---|---|---|
+| Skill name | Tells the agent which routine to follow. In Claude Code you can type `/skill-name`. | `Use bug-hunter:` |
+| Goal | One sentence. | `checkout total is off by one cent` |
+| Context | The facts only you know: repro steps, deadline, device, ticket, teammates. | `items 0.10, 0.20, 0.30 show 0.59, expected 0.60` |
+| Done | How you will know it worked. | `with a regression test` |
+
+You do not need all four every time. A skill asks one question at a time, with a default you can accept by saying "ok".
+
+### Copy-paste prompts
+
+| Skill | Prompt |
 |---|---|
-| doesn't know your project, so it guesses commands and conventions | `repo-scout` |
-| jumps to the first idea, or you commit to a plan nobody challenged | `branch-storm` |
-| builds without a plan, so work can't be split or resumed | `task-graph` |
-| writes code and tests afterwards, or tests that never failed | `tdd-loop` |
-| guesses at causes instead of reproducing the bug | `bug-hunter` |
-| ships a UI that is slow, janky or inaccessible | `pixel-audit`, `frame-budget` |
-| opens a PR with bugs, secrets or unmet requirements | `diff-review` |
-| writes vague commits and PR bodies | `shipwright` |
-| releases without a version, changelog or rollback plan | `release-gate` |
-| doesn't know what your teammates pushed while you worked | `peer-sync` |
-| loses context when you switch session or agent | `agent-handoff` |
-| turns a rough request into a vague task | `prompt-compiler` |
+| `repo-scout` | `Run repo-scout on this repo. It's a Next.js app using pnpm, hosted on GitHub, tickets in Linear (key ENG), conventional commits.` |
+| `branch-storm` | `Use branch-storm: we need offline support in the Flutter app. Two devs, three weeks, no backend changes. Give me options and a recommendation.` |
+| `branch-storm` (challenge a plan) | `Use branch-storm in Grill mode: my plan is a local SQLite cache plus a sync queue. Poke holes in it.` |
+| `task-graph` | `Use task-graph on the offline-sync decision. Tracker is Linear, key ENG. Each task must be demoable on its own and fit one session.` |
+| `tdd-loop` | `Use tdd-loop for task 01: a user can add an item to the cart. Test through the cart widget, not private methods.` |
+| `bug-hunter` | `Use bug-hunter: checkout total is off by one cent for three-item carts. Items 0.10, 0.20, 0.30 show 0.59, expected 0.60. Started after commit abc123.` |
+| `pixel-audit` | `Use pixel-audit on this checkout screenshot. Audience is first-time mobile buyers. Is the pay button clear enough?` |
+| `frame-budget` | `Use frame-budget on lib/features/products. The list drops frames when scrolling on a Pixel 6 in profile mode.` |
+| `diff-review` | `Use diff-review on my branch against main. The spec is task 03. Focus on security and missing tests.` |
+| `shipwright` | `Use shipwright: create branch feat/ENG-42-cart-rounding, commit my changes with conventional commits, push, and open a PR into main. Ticket ENG-42 (Linear). Open it as a draft.` |
+| `release-gate` | `Use release-gate for the Android release 1.4.0 to Google Play. The last tag is v1.3.2.` |
+| `peer-sync` | `Use peer-sync: what did Sam and Lena push since my last commit? Anything touching checkout?` |
+| `agent-handoff` | `Use agent-handoff. The next session in Codex will finish the tests for task 02.` |
+| `prompt-compiler` | `Use prompt-compiler: turn "add search to the products page" into a prompt for Codex.` |
+| `skill-router` | `Use skill-router. I just finished the spec, what now?` |
 
-## The workflow
+### What `shipwright` accepts in your prompt
+
+| You say | It does | If you don't say |
+|---|---|---|
+| `create branch feat/ENG-42-cart-rounding` | Creates exactly that branch | Builds a name from your profile and the ticket |
+| `into main` | Uses that base branch | Uses your default branch |
+| `ticket ENG-42 (Linear)` or `(Jira)` | Links the ticket in the PR | Uses your profile, or no ticket |
+| `open it as a draft` | Opens a draft PR | Opens a ready PR |
+| `request review from Lena` | Adds reviewers | None |
+| `go ahead without asking` | Prints the plan, then continues | Waits for your yes at the plan |
+
+It works the same on GitHub, GitLab and Bitbucket. It reads the host from your git remote.
+
+## The skills
+
+| Skill | What it does for you | What it saves |
+|---|---|---|
+| `skill-router` | Looks at your project and tells you which skill to run next | nothing |
+| `repo-scout` | Detects your stack and writes `AGENTS.md` with verified commands, host, tracker and hot spots. Run once. | `repo-scout/overview.md` |
+| `branch-storm` | Compares options or stress-tests your plan, then gives a recommendation. Keeps `GLOSSARY.md`. | `branch-storm/<topic>.md` |
+| `prompt-compiler` | Turns a rough request into a precise prompt with checkable done-criteria | `prompt-compiler/<slug>.md` |
+| `task-graph` | Turns a decision into a short spec and thin, ordered tasks | `task-graph/<feature>/` |
+| `tdd-loop` | Builds one failing-test, then one fix, at a time | `tdd-loop/<task>.md` |
+| `bug-hunter` | Reproduces the bug, ranks causes, fixes the root cause, adds a regression test | `bug-hunter/<date>-<slug>.md` |
+| `pixel-audit` | Reviews a UI for hierarchy, accessibility and platform fit, with exact fixes | `pixel-audit/<screen>-<date>.md` |
+| `frame-budget` | Finds slow or janky UI on mobile and web, with measurements and file:line | `frame-budget/<scope>-<date>.md` |
+| `diff-review` | Reviews your own changes against the spec and best practice before the PR | `diff-review/<branch>.md` |
+| `shipwright` | Creates the branch, writes commits, opens the PR on GitHub, GitLab or Bitbucket | `shipwright/<branch>.md` |
+| `release-gate` | Gives a go or no-go for a release: version, changelog, migrations, rollback | `release-gate/<version>.md` |
+| `peer-sync` | Summarizes what teammates pushed since your last commit and what overlaps with your work | `peer-sync/<date>.md` |
+| `agent-handoff` | Writes a note so another agent or session can continue | `agent-handoff/<date>-<slug>.md` |
+
+`skill-router`, `repo-scout`, `shipwright` and `agent-handoff` run only when you ask. The rest the agent can also reach for on its own.
+
+## How they fit together
 
 ```mermaid
 flowchart LR
@@ -34,40 +125,34 @@ flowchart LR
     R{{skill-router}} -.-> A
 ```
 
-Each skill reads the previous skill's saved note and writes its own, so the set works as one flow. Use any skill on its own too.
+The solid line is the main path from idea to release. Each skill reads the previous skill's saved note, so the work carries forward. Use any skill on its own too.
 
-## Skills
+## Working in a team
 
-| Skill | Use it to | Invocation |
-|---|---|---|
-| `skill-router` | Find the next skill to run, from the project's notes | Manual |
-| `repo-scout` | Detect the stack and write `AGENTS.md` with a verified project profile. Once per project | Manual |
-| `branch-storm` | Compare options or stress-test a plan, ending in a recommendation. Keeps `GLOSSARY.md` | Automatic |
-| `task-graph` | Turn a decision into a spec and thin end-to-end tasks with blocking edges | Automatic |
-| `tdd-loop` | Build one red-green slice at a time | Automatic |
-| `bug-hunter` | Debug with a red/green feedback loop, ranked hypotheses and a regression test | Automatic |
-| `pixel-audit` | Review a UI: hierarchy, accessibility, platform fit | Automatic |
-| `frame-budget` | Audit UI performance and quality against a frame or web-vitals budget | Automatic |
-| `diff-review` | Review your own diff on standards and spec before the PR | Automatic |
-| `shipwright` | Commit, push and open a PR or MR on GitHub, GitLab or Bitbucket | Manual |
-| `release-gate` | Go or no-go release check: version, changelog, migrations, rollback | Automatic |
-| `peer-sync` | Summarize what teammates pushed since your last commit, and what overlaps with your work | Automatic |
-| `agent-handoff` | Write a note so another agent or session can continue | Manual |
-| `prompt-compiler` | Turn a rough prompt into a precise, checkable one | Automatic |
+Two or three developers can share one repo and one set of skills. Everyone runs `repo-scout` once and commits `AGENTS.md`. Before you start or push, run `peer-sync`. It fetches (without pulling or merging), lists what each teammate pushed since your last commit, and warns you about files you both touched.
 
-"Manual" skills have side effects or are entry points, so they only run when you call them.
-
-## Start a new project
-
-1. Install the skills (below).
-2. Run `repo-scout` once. It writes `AGENTS.md` (read by every agent) and a `CLAUDE.md` that points to it.
-3. Run `skill-router` whenever you are unsure what comes next.
-
-Every skill reads the Profile block in `AGENTS.md`, so none of them re-interviews you about stack, commands, git host, commit style or tracker.
+It can only see work that has been **pushed**. Local commits and uncommitted changes on a teammate's machine are invisible, and it says so.
 
 ## Works for any stack
 
-The workflow in every skill is stack-neutral. Stack knowledge lives in `references/stacks/<stack>.md` and the skill picks the pack from the `stack` value in your profile. Packs today: Flutter, Next.js, Laravel (and a web pack for `frame-budget`). For another stack, the skills still run with general checks, and you can add a pack by copying an existing one. See `SCOPE.md`.
+The steps in every skill are the same for everyone. Stack knowledge lives in small files, `references/stacks/<stack>.md`, chosen from the `stack` value in your profile. Packs today: Flutter, Next.js and Laravel, plus a web pack for `frame-budget`. For another stack the skills still run with general checks, and you can add a pack by copying an existing one (see [SCOPE.md](./SCOPE.md)).
+
+## Where your results go
+
+```text
+AGENTS.md                      your project profile, read by every agent
+CLAUDE.md                      contains only: @AGENTS.md
+GLOSSARY.md                    domain terms, kept by branch-storm
+.agent-notes/
+  repo-scout/overview.md
+  branch-storm/  task-graph/  tdd-loop/  bug-hunter/  pixel-audit/  frame-budget/
+  diff-review/  shipwright/  release-gate/  peer-sync/  agent-handoff/  prompt-compiler/
+docs/adr/0001-<slug>.md        only for hard-to-reverse decisions
+```
+
+- Folders appear the first time a skill writes. Each run gets its own file, and old runs are never overwritten.
+- Secrets are removed before anything is saved.
+- Move the folder with `notes_dir` in the `AGENTS.md` profile. `repo-scout` asks once whether to commit the notes or git-ignore them.
 
 ## Installation
 
@@ -90,52 +175,25 @@ Claude Code plugin (manifest included, install flow not yet tested):
 /plugin install flowkit@flowkit
 ```
 
-Manual skills ship with `agents/openai.yaml` so Codex does not trigger them implicitly. Claude Code reads `disable-model-invocation` from the skill itself.
+## FAQ
 
-## Where output goes
+**Do I need all 14?** No. Install the set and use only what you need. `skill-router` helps when you are unsure.
 
-Every skill saves its result as a markdown file in the project, in a folder named after the skill. A later session or another agent can read it and pick up where the last one stopped.
+**Will it commit or push by itself?** No. `shipwright` acts only when you ask, and it shows its plan first unless you tell it to go ahead.
 
-```text
-AGENTS.md                      short profile, auto-read by every agent (repo-scout)
-CLAUDE.md                      contains only: @AGENTS.md
-GLOSSARY.md                    domain terms, kept by branch-storm
-.agent-notes/
-  repo-scout/overview.md       stack, commands, architecture, hot spots (updated in place)
-  branch-storm/<topic>.md
-  task-graph/<feature>/spec.md, tasks/01-<slug>.md
-  tdd-loop/<task>.md
-  bug-hunter/2026-11-19-<slug>.md
-  pixel-audit/<screen>-<date>.md
-  frame-budget/<scope>-<date>.md
-  diff-review/<branch>.md
-  shipwright/<branch>.md and <branch>.body.md
-  release-gate/<version>.md
-  peer-sync/<date>.md
-  agent-handoff/<date>-<slug>.md
-  prompt-compiler/<slug>-<date>.md
-docs/adr/0001-<slug>.md        only for hard-to-reverse decisions (branch-storm offers it)
-```
+**Does it work in Codex?** The skills use the shared format. The four run-only-when-asked skills ship an `agents/openai.yaml` so Codex does not trigger them on its own. This has not been tested in Codex yet.
 
-- Folders are created on first write. One file per run; earlier runs are never overwritten (`overview.md` is the one exception).
-- Secrets are redacted before anything is written.
-- Change the location with `notes_dir` in the `AGENTS.md` profile. `repo-scout` asks once whether to commit the notes or git-ignore them.
-- Throwaway artifacts (prototypes, large logs, HTML reports) belong in the OS temp directory, not the repo.
+**What if my stack isn't listed?** The workflow still applies. You only lose the stack-specific checks until a pack exists.
 
-## Working style
-
-- Terse by default. Say "explain" or "go deep" for more.
-- A skill asks at most one question at a time, and always offers a default you can accept with "ok".
-- Audits have a quick mode for narrow questions and a full mode for reviews, and the full mode stops for your decision before implementing.
-- Nothing external happens unasked: no commit, push, PR, tag, deploy or pull.
+**Is it opinionated?** Yes: tests first, reproduce before you debug, conventional commits, small steps. [SCOPE.md](./SCOPE.md) explains what stays in and out.
 
 ## Evals
 
-`evals/evals.json` has realistic prompts and expectations for each skill, plus prompts that should and should not trigger it. Run each prompt with and without the skill and compare.
+`evals/evals.json` holds realistic prompts and expectations for every skill, plus prompts that should and should not trigger it. Run each with and without the skill and compare.
 
 ## Credits
 
-Built from ideas in public skill collections: the feedback-loop-first debugging approach, the router, the thin-slice planning, the lazy per-purpose file conventions and the writing guidance in Matt Pocock's `mattpocock/skills`; the PR body format from Dex Horthy's show-me skill (HumanLayer); and the skill-writing guidance in Anthropic's `skill-creator`.
+Built from ideas in public skill collections: the feedback-loop-first debugging approach, the router, thin-slice planning, lazy per-purpose file conventions and writing guidance in Matt Pocock's `mattpocock/skills`; the PR body format from Dex Horthy's show-me skill (HumanLayer); and the skill-writing guidance in Anthropic's `skill-creator`.
 
 ## License
 

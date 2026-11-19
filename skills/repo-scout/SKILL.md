@@ -41,6 +41,12 @@ Questions: ask only for what cannot be detected, one at a time, each with a reco
 - Only project-specific facts belong in the profile. Generic advice costs context on every turn and the agent already knows it.
 - Hot spots come from git history because architecture diagrams go stale and commit churn does not.
 
+## Prompts that work
+
+Name the skill and include the stack and package manager, git host, ticket tracker and key, commit style, and anything agents must not touch.
+- "Run repo-scout on this repo. It is a Next.js app using pnpm, hosted on GitHub, tickets in Linear (key ENG), conventional commits."
+- "Run repo-scout. I just joined this project, map it and tell me where the work happens."
+
 ## Save output
 
 Write the result to `<notes_dir>/repo-scout/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

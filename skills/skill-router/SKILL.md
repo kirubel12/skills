@@ -55,3 +55,9 @@ Also useful: <skill>, <skill>
 ## Done when
 - The recommendation cites evidence and names exactly one next skill.
 - You read that skill's `SKILL.md` first.
+
+## Prompts that work
+
+Name the skill and include where you are in the work, in one sentence.
+- "Use skill-router. I just finished the spec, what now?"
+- "Use skill-router. A teammate pushed while I was working and I am not sure what to run."

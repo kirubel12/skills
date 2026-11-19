@@ -57,6 +57,12 @@ Changes: added a reproduction requirement, a verifiable done-condition, and a sc
 - The compiled prompt has a one-sentence goal and at least one pass or fail criterion.
 - Every assumption is listed separately.
 
+## Prompts that work
+
+Name the skill and include your rough prompt, the target (Claude Code, Codex, a chat model) and any constraint you care about.
+- "Use prompt-compiler: turn "add search to the products page" into a prompt for Codex."
+- "Use prompt-compiler on this prompt for Claude Code: "make the app faster". Keep it short."
+
 ## Save output
 
 Write the result to `<notes_dir>/prompt-compiler/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

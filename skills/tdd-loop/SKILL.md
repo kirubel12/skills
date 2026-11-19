@@ -32,6 +32,12 @@ Read the `AGENTS.md` Profile block (stack, test command) and the newest note in 
 - Lint, types and the full suite are green, or the failures are reported.
 - The note lists the tests added and anything left untested, with the reason.
 
+## Prompts that work
+
+Name the skill and include the task or behavior, where it lives (screen, route, service), and any seam you want tested through.
+- "Use tdd-loop for task 01: a user can add an item to the cart. Test through the cart widget, not private methods."
+- "Use tdd-loop: POST /api/orders must reject an empty cart with a 422. Laravel, Pest."
+
 ## Save output
 
 Write the result to `<notes_dir>/tdd-loop/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

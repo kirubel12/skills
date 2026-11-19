@@ -48,6 +48,12 @@ Suggested: <one action>
 ## Privacy
 Use names, not email addresses, in the saved note.
 
+## Prompts that work
+
+Name the skill and include who to look at (everyone or named people), the anchor (default: your last commit), and any area you care about.
+- "Use peer-sync: what did Sam and Lena push since my last commit? Anything touching checkout?"
+- "Use peer-sync: catch me up on the repo since Monday."
+
 ## Save output
 
 Write the result to `<notes_dir>/peer-sync/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

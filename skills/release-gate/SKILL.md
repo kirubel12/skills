@@ -39,6 +39,12 @@ A release is the point where mistakes get expensive and hard to undo. Read the `
 ## Why unknown is allowed
 A confident "pass" nobody verified is how bad releases ship. Say `unknown` and make it a blocker or an accepted risk.
 
+## Prompts that work
+
+Name the skill and include the target (Play Store, App Store, Vercel, server), the version you plan, and the last tag.
+- "Use release-gate for the Android release 1.4.0 to Google Play. The last tag is v1.3.2."
+- "Use release-gate before I deploy the Laravel API to production tonight."
+
 ## Save output
 
 Write the result to `<notes_dir>/release-gate/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

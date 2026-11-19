@@ -15,9 +15,24 @@ Host commands, tracker linking and the commit spec are in `references/host-comma
 
 Commit, push and PR creation are outward-facing. Only do the steps the user asked for, and show the plan before the first external action.
 
+## Parameters you can pass in the prompt
+Use what the prompt gives you, derive the rest from the profile and the repo, and ask only if something blocks.
+
+| Parameter | Example | Default |
+|---|---|---|
+| Branch | `create branch feat/ENG-42-cart-rounding` | name built from `branch_format` and the ticket |
+| Base | `into main` | `default_branch` |
+| Ticket | `ticket ENG-42 (Linear)` | profile `tracker` and `tracker_key`, or none |
+| Draft | `open it as a draft` | ready for review |
+| Title or scope | `only the cart changes` | derived from the commits |
+| Reviewers | `request review from Lena` | none |
+| Confirmation | `go ahead without asking` | ask at the plan gate |
+
+If the prompt says to proceed without asking, still print the plan, then continue. Without that, wait at the plan gate.
+
 ## Workflow
 
-1. **Preflight.** Read the latest notes in `<notes_dir>/diff-review/` and `<notes_dir>/tdd-loop/`. If the review verdict is `fix first`, say so and ask before going on. Reuse their results as PR evidence. `git status`, current branch, upstream, remote host. If on the default branch, propose a branch named from `branch_format` (with the ticket key when there is one). Never commit to the default branch without being told to.
+1. **Preflight.** Read the latest notes in `<notes_dir>/diff-review/` and `<notes_dir>/tdd-loop/`. If the review verdict is `fix first`, say so and ask before going on. Reuse their results as PR evidence. `git status`, current branch, upstream, remote host. If the prompt names a branch, create it with `git switch -c <name>`. If on the default branch and none was named, propose one named from `branch_format` (with the ticket key when there is one). Never commit to the default branch without being told to.
 2. **Self-review the diff** against the base branch. Check for: secrets or `.env` values, debug leftovers (`print`, `console.log`, `dd(`, `[BH-` tags), unrelated changes, missing tests, generated files that should not be committed. Fix or report each finding.
 3. **Run the checks** from the profile (lint, test). Report real results. If a check fails, stop and say so, do not open the PR.
 4. **Commit** with conventional commits (spec in the reference). Split unrelated changes into separate commits. Subject in imperative mood, 72 characters or fewer, body explains why. Add any attribution lines the environment instructs, never invent your own.
@@ -32,6 +47,12 @@ Mirror the repository's own template if one exists (headings only; skip any sect
 - Checks passed or the failure is reported.
 - Commits follow the convention and nothing sensitive is in the diff.
 - The PR exists with a title, body and ticket link, and the URL was reported. Or the user chose to stop earlier and the report says where.
+
+## Prompts that work
+
+Name the skill and include the branch name, base branch, ticket id, draft or ready, and whether to proceed without asking.
+- "Use shipwright: create branch feat/ENG-42-cart-rounding, commit my changes with conventional commits, push, and open a PR into main. Ticket ENG-42 (Linear). Open it as a draft."
+- "Use shipwright: write the PR description for my current branch only. Do not push or create anything."
 
 ## Save output
 

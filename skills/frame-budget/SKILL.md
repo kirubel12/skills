@@ -42,6 +42,12 @@ Read the `AGENTS.md` Profile block (stack, commands) and pick the pack: `referen
 - Lint and tests are clean after implemented changes.
 - Shared-component changes list their other usages.
 
+## Prompts that work
+
+Name the skill and include the folder or screen, the device or browser, and the symptom (dropped frames, slow load, large bundle).
+- "Use frame-budget on lib/features/products. The list drops frames when scrolling on a Pixel 6 in profile mode."
+- "Use frame-budget on the Next.js /pricing page. LCP is 4s on mobile. Find out why."
+
 ## Save output
 
 Write the result to `<notes_dir>/frame-budget/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

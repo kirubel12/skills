@@ -145,6 +145,17 @@
             "Saves a note under .agent-notes/shipwright/ using the template in references/output-format.md and ends with 'Saved: <path>'",
             "Creates the folder only on first write and writes no secrets"
           ]
+        },
+        {
+          "prompt": "Use shipwright: create branch feat/ENG-42-cart-rounding, commit my changes with conventional commits, push, and open a PR into main. Ticket ENG-42 (Linear). Open it as a draft.",
+          "expectations": [
+            "Creates the branch with the exact name given",
+            "Uses main as the base",
+            "Opens the PR as a draft",
+            "Includes Closes ENG-42 or Refs ENG-42 in the body",
+            "Prints the plan (host, head, base, title, body) before the first external action",
+            "Writes the PR body to .agent-notes/shipwright/ and passes it with --body-file or the API"
+          ]
         }
       ]
     },

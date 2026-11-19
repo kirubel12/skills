@@ -26,6 +26,12 @@ about X"), tailor the note to it. Style: terse. Under about 60 lines.
 - A new agent could start from "Next steps" using only the note and the files it links.
 - Nothing in the note duplicates another artifact, and nothing sensitive is in it.
 
+## Prompts that work
+
+Name the skill and include what the next session will do and which agent will do it.
+- "Use agent-handoff. The next session in Codex will finish the tests for task 02."
+- "Use agent-handoff. I am stopping for today, save everything I need to resume."
+
 ## Save output
 
 Write the result to `<notes_dir>/agent-handoff/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

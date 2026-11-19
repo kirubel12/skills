@@ -35,6 +35,12 @@ Find what a reviewer would find, before they see it. Read the `AGENTS.md` Profil
 ## Why verify first
 An unverified finding wastes the author's time and trains them to ignore the reviewer. A short list of grounded findings beats a long list of guesses.
 
+## Prompts that work
+
+Name the skill and include the base branch, which task or spec the change implements, and what to focus on.
+- "Use diff-review on my branch against main. The spec is task 03. Focus on security and missing tests."
+- "Use diff-review before I open the PR. Do not edit anything, just report."
+
 ## Save output
 
 Write the result to `<notes_dir>/diff-review/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

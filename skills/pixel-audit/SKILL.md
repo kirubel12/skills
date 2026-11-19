@@ -40,6 +40,12 @@ Lens checklists with numbers are in `references/lenses.md`. Read it before audit
 ## Why
 Vague critique cannot be acted on or verified. Observed value plus principle plus exact fix can be checked by the next person.
 
+## Prompts that work
+
+Name the skill and include a screenshot or the UI code, the screen purpose, who uses it, and your main worry.
+- "Use pixel-audit on this checkout screenshot. Audience is first-time mobile buyers. Is the pay button clear enough?"
+- "Use pixel-audit, full audit, on lib/features/onboarding. We target iOS and Android."
+
 ## Save output
 
 Write the result to `<notes_dir>/pixel-audit/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

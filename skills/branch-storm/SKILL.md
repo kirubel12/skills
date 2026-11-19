@@ -50,6 +50,12 @@ What would change my mind: <one observable thing>
 ## If the question is about how something should feel or look
 Suggest a throwaway prototype instead of more discussion, and say what question it would answer. A prototype is disposable code that answers one question: keep it next to the code it informs, name it so nobody mistakes it for production, skip tests and polish, and delete it or turn the answer into a task afterwards.
 
+## Prompts that work
+
+Name the skill and include the problem, your constraints (team size, deadline, budget), what you already lean toward, and whether you want ideas (Explore) or your plan challenged (Grill).
+- "Use branch-storm: we need offline support in the Flutter app. Two devs, three weeks, no backend changes. Give me options and a recommendation."
+- "Use branch-storm in Grill mode: my plan is a local SQLite cache plus a sync queue. Poke holes in it."
+
 ## Save output
 
 Write the result to `<notes_dir>/branch-storm/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

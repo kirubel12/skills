@@ -28,6 +28,12 @@ Turn "we decided X" into work an agent or a teammate can pick up cold. Read the 
 ## Why thin slices
 Early end-to-end feedback exposes wrong assumptions while they are cheap. Horizontal tasks hide integration failures until the end.
 
+## Prompts that work
+
+Name the skill and include the decision to build (or the branch-storm note), the tracker and key, and how small each task should be.
+- "Use task-graph on the offline-sync decision. Tracker is Linear, key ENG. Each task must be demoable on its own and fit one session."
+- "Use task-graph: write a spec and tasks for password reset. No tracker, local files are fine."
+
 ## Save output
 
 Write the result to `<notes_dir>/task-graph/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.

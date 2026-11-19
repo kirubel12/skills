@@ -53,6 +53,12 @@ No correct seam is itself a finding: say the architecture prevents locking this 
 ## Why
 A premature hypothesis anchors every later step. Ranked, falsifiable hypotheses and a red-capable loop remove that anchor and make "fixed" a measurement instead of a feeling.
 
+## Prompts that work
+
+Name the skill and include the exact symptom, steps to reproduce, expected versus actual, when it started, and anything you already ruled out.
+- "Use bug-hunter: checkout total is off by one cent for three-item carts. Items 0.10, 0.20, 0.30 show 0.59, expected 0.60. Started after commit abc123."
+- "Use bug-hunter: the home screen throws LateInitializationError on cold start on Android only. Stack trace pasted below."
+
 ## Save output
 
 Write the result to `<notes_dir>/bug-hunter/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
