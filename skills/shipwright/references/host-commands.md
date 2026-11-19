@@ -12,6 +12,10 @@ git push -u origin "$BRANCH"
 gh pr create --base "$BASE" --head "$BRANCH" --title "$TITLE" --body-file "$BODY_FILE"   # add --draft for drafts
 gh pr view --web          # open it
 ```
+If `gh pr create` fails because GraphQL is blocked (some restricted or cloud environments), use the REST API, which `gh api` supports. Add `-F draft=true` for a draft:
+```bash
+gh api repos/<owner>/<repo>/pulls -f title="$TITLE" -f head="$BRANCH" -f base="$BASE" -F body=@"$BODY_FILE" --jq '.html_url'
+```
 If `gh` is missing or unauthenticated, print the title and body and the compare URL `https://github.com/<owner>/<repo>/compare/<base>...<branch>?expand=1`.
 
 ## GitLab (`glab`)
