@@ -1,0 +1,359 @@
+{
+  "note": "Run each test prompt with the skill installed and without it, then compare against the expectations. should_trigger and should_not_trigger check the description routing.",
+  "skills": {
+    "repo-scout": {
+      "should_trigger": [
+        "set up this repo for agents",
+        "I just cloned this project, map the codebase for me",
+        "create an AGENTS.md for this Flutter app"
+      ],
+      "should_not_trigger": [
+        "fix this null error",
+        "review my pull request"
+      ],
+      "tests": [
+        {
+          "prompt": "Onboard me to this Next.js repo and set up AGENTS.md.",
+          "expectations": [
+            "Detects Next.js and package manager from files, not by asking",
+            "Prints a short mirror of findings before asking anything",
+            "Marks each command verified or unverified",
+            "Writes CLAUDE.md containing only @AGENTS.md",
+            "Shows the draft before writing",
+            "Saves a note under .agent-notes/repo-scout/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        }
+      ]
+    },
+    "bug-hunter": {
+      "should_trigger": [
+        "debug this: LateInitializationError on the home screen",
+        "works locally but 500s in production",
+        "why is this list janky"
+      ],
+      "should_not_trigger": [
+        "write a PR description",
+        "brainstorm features for my app"
+      ],
+      "tests": [
+        {
+          "prompt": "My Laravel queue job sometimes sends the email twice. Debug it.",
+          "expectations": [
+            "Builds or proposes a deterministic red-capable loop before theorising",
+            "Lists 3 to 5 ranked hypotheses that each make a prediction",
+            "States the root cause with evidence before editing",
+            "Uses a tagged [BH-xxxx] for temporary logs and removes them",
+            "Redacts any secrets shown",
+            "Saves a note under .agent-notes/bug-hunter/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        }
+      ]
+    },
+    "branch-storm": {
+      "should_trigger": [
+        "brainstorm features for a habit tracker",
+        "should I use Riverpod or BLoC",
+        "grill me on this plan"
+      ],
+      "should_not_trigger": [
+        "fix this crash",
+        "open a PR"
+      ],
+      "tests": [
+        {
+          "prompt": "I'm thinking of adding offline sync to my Flutter app. Poke holes in it.",
+          "expectations": [
+            "Chooses Grill mode and says so",
+            "Asks one question at a time with a recommended answer",
+            "Looks up facts in the repo instead of asking",
+            "Ends with a settled-decisions list and waits for confirmation",
+            "Saves a note under .agent-notes/branch-storm/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        }
+      ]
+    },
+    "pixel-audit": {
+      "should_trigger": [
+        "review this design",
+        "is this button color okay?",
+        "make this screen look more professional"
+      ],
+      "should_not_trigger": [
+        "why does the build fail",
+        "write the commit message"
+      ],
+      "tests": [
+        {
+          "prompt": "Is the grey text on this white card readable?",
+          "expectations": [
+            "Uses Quick mode: verdict, principle, exact fix value",
+            "Cites the WCAG contrast ratio threshold",
+            "Does not run the full audit",
+            "Mentions at most 2 other P1 issues",
+            "Saves a note under .agent-notes/pixel-audit/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        }
+      ]
+    },
+    "frame-budget": {
+      "should_trigger": [
+        "audit my Flutter app for performance",
+        "why is scrolling janky on Android",
+        "review these mobile screens"
+      ],
+      "should_not_trigger": [
+        "review this landing page design",
+        "create a PR"
+      ],
+      "tests": [
+        {
+          "prompt": "My Flutter product list drops frames. Audit it.",
+          "expectations": [
+            "Every finding has a file:line",
+            "Asks for or recommends profile-mode measurement on a real device",
+            "Lists other usages before proposing a shared-widget change",
+            "Stops after the plan and asks for a path",
+            "Saves a note under .agent-notes/frame-budget/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        }
+      ]
+    },
+    "shipwright": {
+      "should_trigger": [
+        "open a PR for this",
+        "commit and push my changes",
+        "write the PR description"
+      ],
+      "should_not_trigger": [
+        "why is this failing",
+        "brainstorm names"
+      ],
+      "tests": [
+        {
+          "prompt": "Commit this and open a merge request. Tracker is Linear, ticket ENG-42.",
+          "expectations": [
+            "Detects the host from the remote",
+            "Runs a self-review of the diff and the profile's checks",
+            "Uses conventional commit messages",
+            "Includes Closes ENG-42 in the body",
+            "Shows host, base, title and body and waits before creating the MR",
+            "Saves a note under .agent-notes/shipwright/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        },
+        {
+          "prompt": "Use shipwright: create branch feat/ENG-42-cart-rounding, commit my changes with conventional commits, push, and open a PR into main. Ticket ENG-42 (Linear). Open it as a draft.",
+          "expectations": [
+            "Creates the branch with the exact name given",
+            "Uses main as the base",
+            "Opens the PR as a draft",
+            "Includes Closes ENG-42 or Refs ENG-42 in the body",
+            "Prints the plan (host, head, base, title, body) before the first external action",
+            "Writes the PR body to .agent-notes/shipwright/ and passes it with --body-file or the API"
+          ]
+        }
+      ]
+    },
+    "prompt-compiler": {
+      "should_trigger": [
+        "improve this prompt: make the app faster",
+        "write a prompt for an agent to add dark mode",
+        "enhance my prompt"
+      ],
+      "should_not_trigger": [
+        "run the tests",
+        "audit my UI"
+      ],
+      "tests": [
+        {
+          "prompt": "Make my prompt better: add search to the products page",
+          "expectations": [
+            "Gathers context from the repo and AGENTS.md instead of asking",
+            "Output has a one-sentence goal and checkable acceptance criteria",
+            "Assumptions are listed separately from the prompt",
+            "Does not execute the prompt",
+            "Compiled prompt is not padded",
+            "Saves a note under .agent-notes/prompt-compiler/ using the template in references/output-format.md and ends with 'Saved: <path>'",
+            "Creates the folder only on first write and writes no secrets"
+          ]
+        }
+      ]
+    },
+    "skill-router": {
+      "should_trigger": [
+        "what should I run next",
+        "which skill do I use for this",
+        "where am I in the workflow"
+      ],
+      "should_not_trigger": [
+        "fix this crash",
+        "write a PR description"
+      ],
+      "tests": [
+        {
+          "prompt": "I just finished brainstorming the checkout redesign. What now?",
+          "expectations": [
+            "Reads AGENTS.md and the newest notes before answering",
+            "Quotes the evidence (a note path or profile fact)",
+            "Recommends exactly one next skill (task-graph) and at most two side entries",
+            "Reads the recommended skill's SKILL.md first",
+            "Reply is 8 lines or fewer"
+          ]
+        }
+      ]
+    },
+    "task-graph": {
+      "should_trigger": [
+        "write a spec for this feature",
+        "break this down into tasks",
+        "create tickets for the offline sync work"
+      ],
+      "should_not_trigger": [
+        "debug this error",
+        "open a PR"
+      ],
+      "tests": [
+        {
+          "prompt": "We decided on offline-first sync. Turn it into a spec and tasks. Tracker is Linear, key ENG.",
+          "expectations": [
+            "Reads the latest branch-storm note",
+            "Task 1 is a thin end-to-end slice, not a layer",
+            "Every task has pass or fail acceptance criteria and a Blocked by line",
+            "Lists the frontier and checks for cycles",
+            "Shows the spec and tasks and waits before writing or creating tickets",
+            "Saves a note under .agent-notes/task-graph/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "tdd-loop": {
+      "should_trigger": [
+        "implement the login form",
+        "add this feature test-first",
+        "write tests for the cart service"
+      ],
+      "should_not_trigger": [
+        "audit my UI",
+        "plan the release"
+      ],
+      "tests": [
+        {
+          "prompt": "Implement task 01: user can add an item to the cart.",
+          "expectations": [
+            "Restates acceptance criteria as observable behaviors",
+            "Writes one failing test first and shows it failing for the expected reason",
+            "Writes minimal code, then runs the test",
+            "Does not write all tests up front",
+            "Mocks only at system boundaries",
+            "Runs lint, types and the full suite and reports real results",
+            "Saves a note under .agent-notes/tdd-loop/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "diff-review": {
+      "should_trigger": [
+        "review my changes before I open a PR",
+        "is this ready to merge",
+        "check my diff"
+      ],
+      "should_not_trigger": [
+        "brainstorm names",
+        "set up this repo"
+      ],
+      "tests": [
+        {
+          "prompt": "Review my branch before I ship it.",
+          "expectations": [
+            "Runs the profile's checks and reports real results",
+            "Maps each acceptance criterion to code and a test",
+            "Every finding has a file:line and evidence and was verified by reading the code",
+            "Separates problems the diff introduced from pre-existing ones",
+            "Ends with a verdict: ready, ready with notes or fix first",
+            "Does not edit code unless asked",
+            "Saves a note under .agent-notes/diff-review/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "release-gate": {
+      "should_trigger": [
+        "are we ready to release",
+        "pre-release checklist",
+        "cut a release"
+      ],
+      "should_not_trigger": [
+        "fix this bug",
+        "write the PR body"
+      ],
+      "tests": [
+        {
+          "prompt": "Run the release checklist for the Flutter app.",
+          "expectations": [
+            "Suggests a semver bump from the commit types since the last tag",
+            "Drafts a changelog from commit subjects",
+            "Marks each checklist item pass, fail or unknown with evidence, never assumed",
+            "Lists one-way doors and a rollback plan",
+            "States GO, GO with risks or NO-GO",
+            "Does not tag, publish or deploy",
+            "Saves a note under .agent-notes/release-gate/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "agent-handoff": {
+      "should_trigger": [
+        "hand this off to another agent",
+        "save my progress, I'll continue tomorrow",
+        "write a handoff note"
+      ],
+      "should_not_trigger": [
+        "review my diff",
+        "brainstorm ideas"
+      ],
+      "tests": [
+        {
+          "prompt": "Hand this off. Next session will finish the tests.",
+          "expectations": [
+            "Links other notes instead of duplicating them",
+            "Records decisions with reasons and what was tried and failed",
+            "Every command and path in the note was verified",
+            "Redacts secrets",
+            "Ends with a one-line starter prompt",
+            "Saves a note under .agent-notes/agent-handoff/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    },
+    "peer-sync": {
+      "should_trigger": [
+        "what did my partner do since my last commit",
+        "did anyone push",
+        "catch me up on the repo"
+      ],
+      "should_not_trigger": [
+        "write a commit message",
+        "debug this crash"
+      ],
+      "tests": [
+        {
+          "prompt": "What did my teammates push since my last commit?",
+          "expectations": [
+            "Uses the date of the user's last commit as the anchor and says so",
+            "Runs git fetch only and never pulls, merges or rebases",
+            "States that only pushed commits are visible, not local or uncommitted work",
+            "Groups pushed commits per person and branch with a short summary",
+            "Reports overlap with the user's changed files and the merge-tree conflict probe result",
+            "Uses names, not email addresses, in the saved note",
+            "Saves a note under .agent-notes/peer-sync/ using the template in references/output-format.md and ends with 'Saved: <path>'"
+          ]
+        }
+      ]
+    }
+  }
+}

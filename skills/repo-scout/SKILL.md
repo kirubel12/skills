@@ -1,0 +1,56 @@
+---
+name: repo-scout
+description: >
+  Project kickoff. Detects the stack (Flutter, Next.js, Laravel, other) and writes AGENTS.md with a verified project
+  profile (commands, git host, commit style, tracker, hot spots) that every skill here reads. Run when starting a
+  project, opening an unfamiliar repo, or when AGENTS.md is missing or stale. Also use when the user says "set up this
+  repo for agents", "onboard me to this codebase", or "map this codebase".
+disable-model-invocation: true
+---
+
+# repo-scout
+
+Write the project profile once so no other skill has to interview the user again.
+
+Style: terse, no emoji, no praise. Expand only if the user says "explain".
+Questions: ask only for what cannot be detected, one at a time, each with a recommended default the user can accept with "ok".
+
+## Workflow
+
+1. **Explore.** Follow `references/stack-detection.md`. Also read existing `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `README.md`.
+   For an existing repo, find hot spots: `git log --since=90.days --name-only --pretty=format: | sort | uniq -c | sort -rn | head -15`. Recent churn shows where the work is.
+2. **Mirror.** Print what you found in under 10 lines: stack, commands, host, branch, hot spots, gaps. This is the confirmation step.
+3. **Fill gaps.** Ask one question per unknown field, with a default. Fields: one-line purpose, tracker (`none` | `linear` | `jira` and key prefix), git host if there is no remote, paths agents must not touch, and whether agent notes are committed or git-ignored (default: committed, because the notes are the project's memory; if ignored, add `<notes_dir>/` to `.gitignore`).
+4. **Draft.** Fill `references/profile-template.md`. Show the draft and let the user edit it before anything is written.
+5. **Write.**
+   - `AGENTS.md` holds the content (Claude Code, Codex, Cursor and others all read it).
+   - `CLAUDE.md` contains only `@AGENTS.md`.
+   - If `CLAUDE.md` already has real content, offer to move it into `AGENTS.md` (ask once). If `AGENTS.md` exists, update the profile block in place and leave the user's other sections alone.
+   - `<notes_dir>/repo-scout/overview.md` with the longer map (stack, commands, architecture, hot spots, gaps).
+   - New empty project: propose the minimal folder layout for the stack, scaffold nothing without a yes.
+6. **Verify.** Run each detected install, lint and test command in its fastest form. Mark it `verified` or `unverified`. A command nobody has seen work is a guess, so label it.
+7. **Report** in three lines: files written, commands verified, open gaps.
+
+## Done when
+- `AGENTS.md` has no placeholders (unknowns say `unknown`).
+- `CLAUDE.md` points to it.
+- Every command carries a verified or unverified mark.
+- The profile is under about 80 lines. Link to docs instead of copying them.
+
+## Why these rules
+- Only project-specific facts belong in the profile. Generic advice costs context on every turn and the agent already knows it.
+- Hot spots come from git history because architecture diagrams go stale and commit churn does not.
+
+## Prompts that work
+
+Name the skill and include the stack and package manager, git host, ticket tracker and key, commit style, and anything agents must not touch.
+- "Run repo-scout on this repo. It is a Next.js app using pnpm, hosted on GitHub, tickets in Linear (key ENG), conventional commits."
+- "Run repo-scout. I just joined this project, map it and tell me where the work happens."
+
+## Save output
+
+Write the result to `<notes_dir>/repo-scout/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- `overview.md` is updated in place (history lives in git). Never delete the user's own notes.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`, then `Next: branch-storm`.

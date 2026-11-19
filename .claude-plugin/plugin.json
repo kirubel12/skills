@@ -1,0 +1,31 @@
+{
+  "name": "flowkit",
+  "version": "0.1.0",
+  "description": "Agent skills for the whole engineering workflow, from brainstorm to release: repo setup, specs, TDD, debugging, review, PRs, release checks and team sync.",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "workflow",
+    "tdd",
+    "code-review",
+    "debugging",
+    "pull-request",
+    "release"
+  ],
+  "skills": [
+    "./skills/agent-handoff",
+    "./skills/branch-storm",
+    "./skills/bug-hunter",
+    "./skills/diff-review",
+    "./skills/frame-budget",
+    "./skills/peer-sync",
+    "./skills/pixel-audit",
+    "./skills/prompt-compiler",
+    "./skills/release-gate",
+    "./skills/repo-scout",
+    "./skills/shipwright",
+    "./skills/skill-router",
+    "./skills/task-graph",
+    "./skills/tdd-loop"
+  ]
+}

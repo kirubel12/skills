@@ -1,0 +1,53 @@
+# AGENTS.md template
+
+Fill every field. Write `unknown` instead of guessing. Delete sections with nothing project-specific to say.
+
+````markdown
+# <project name>
+
+<one line: what this project is and who uses it>
+
+## Profile
+
+```yaml
+stack: flutter | nextjs | laravel | other:<name>
+package_manager: <pub | pnpm | npm | yarn | bun | composer>
+git:
+  host: github | gitlab | bitbucket
+  default_branch: main
+  commits: conventional
+  branch_format: <type>/<ticket-or-slug>     # e.g. feat/ENG-123-login-flow
+tracker: none | linear | jira
+tracker_key: <ENG | PROJ | none>
+commands:                                    # mark each: verified | unverified
+  install: "<cmd>"   # verified
+  dev:     "<cmd>"   # unverified
+  test:    "<cmd>"   # verified
+  lint:    "<cmd>"   # verified
+  build:   "<cmd>"   # unverified
+style: terse
+notes_dir: .agent-notes
+notes_git: commit                       # commit | ignore
+```
+
+## Architecture
+<= 10 lines: entry points, state management, data flow, where features live.
+
+## Hot spots
+Top areas by 90-day commit churn (paths only).
+
+## Do not touch
+Generated files, vendored code, migrations already applied.
+
+## Gotchas
+Project-specific traps only. Example: "Run `dart run build_runner build` after editing models".
+
+## Agent notes
+Skill output is saved to `.agent-notes/<skill>/`. Read a skill's folder before repeating its work.
+
+## Agent skills
+Installed via the skills CLI. These skills read the Profile block above and save notes under `.agent-notes/<skill>/`.
+Flow: `repo-scout` > `branch-storm` > `task-graph` > `tdd-loop` > `diff-review` > `shipwright` > `release-gate`.
+Side entries: `bug-hunter`, `pixel-audit`, `frame-budget`, `prompt-compiler`, `peer-sync`, `agent-handoff`. Unsure where you are: `skill-router`.
+Stack packs: skills pick `references/stacks/<stack>.md` from the `stack` value above. No pack for your stack means general checks only.
+````

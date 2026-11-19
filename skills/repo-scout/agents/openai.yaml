@@ -1,0 +1,5 @@
+interface:
+  display_name: "Repo Scout"
+  short_description: "Detect the stack and write AGENTS.md"
+policy:
+  allow_implicit_invocation: false
