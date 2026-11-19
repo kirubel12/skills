@@ -1,5 +1,5 @@
 ---
-name: ui-lint
+name: pixel-audit
 description: >
   Lints a UI design the way a linter checks code: reviews screenshots, mockups, Figma exports or frontend code
   (Flutter, Next.js/React/Tailwind, Blade) for hierarchy, accessibility, platform fit, interaction states and
@@ -7,7 +7,7 @@ description: >
   professional", "is this color okay?", or whenever the user shares a screen image or UI code, even for one narrow question.
 ---
 
-# ui-lint
+# pixel-audit
 
 Read the `AGENTS.md` Profile block for the stack so fixes use the right token system. Style: terse, specific, no praise.
 Lens checklists with numbers are in `references/lenses.md`. Read it before auditing.

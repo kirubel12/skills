@@ -1,5 +1,5 @@
 ---
-name: repo-primer
+name: repo-scout
 description: >
   Project kickoff. Detects the stack (Flutter, Next.js, Laravel, other) and writes AGENTS.md with a verified project
   profile (commands, git host, commit style, tracker, hot spots) that every skill here reads. Run when starting a
@@ -8,7 +8,7 @@ description: >
 disable-model-invocation: true
 ---
 
-# repo-primer
+# repo-scout
 
 Write the project profile once so no other skill has to interview the user again.
 

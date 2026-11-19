@@ -1,64 +1,65 @@
 # Skills
 
-A collection of AI agent skills, usable across Claude, Cursor, and other agent tools that support the skills format.
+Agent skills for everyday Flutter, Next.js and Laravel work. They follow the open `SKILL.md` format, so they work in Claude Code, Codex, Cursor and other agents that support skills.
 
-## Available skills
+## Skills
 
-### Elite Adaptive Design Auditor
+| Skill | Use it to | Trigger |
+|---|---|---|
+| `repo-scout` | Detect the stack and write `AGENTS.md` with a verified project profile. Run once per project | Manual |
+| `bug-hunter` | Debug with a red/green feedback loop, ranked hypotheses and a regression test | Automatic |
+| `branch-storm` | Brainstorm options or stress-test a plan, ending in a recommendation | Automatic |
+| `pixel-audit` | Review a UI design or frontend code: hierarchy, accessibility, platform fit | Automatic |
+| `frame-budget` | Audit Flutter and mobile apps: jank, rebuilds, accessibility, architecture | Automatic |
+| `shipwright` | Commit, push and open a PR or MR on GitHub, GitLab or Bitbucket | Manual |
+| `prompt-compiler` | Turn a rough prompt into a precise, checkable one | Automatic |
 
-Audits UI/UX designs and frontend code, then gives professional-grade critique and improvement suggestions.
+"Manual" skills have side effects, so they only run when you call them.
 
-Triggers automatically when you:
-- Upload an image of a UI/UX design (screenshot, mockup, Figma export, etc.)
-- Share frontend code for a user interface
-- Ask for a review, critique, or "pro" improvement of a layout
-- Ask a specific question about one element (e.g. "is this color okay?") — the skill runs a full audit but prioritizes your specific question in the results
+## Start a new project
 
-Example prompts:
-- "Review this design"
-- "What's wrong with this UI?"
-- "How do I make this look more professional?"
+1. Install the skills (below).
+2. Run `repo-scout` once. It writes `AGENTS.md` (read by every agent) and a `CLAUDE.md` that points to it.
+3. Every other skill reads the Profile block in `AGENTS.md`, so none of them re-interview you about stack, commands, git host, commit style or tracker.
 
-### Elite Mobile Framework Auditor Ultimate
-
-Audits mobile app projects (native and cross-platform), reviews architecture, performance, accessibility, security, and platform-specific best practices. It provides concrete remediation steps, code examples, and prioritised recommendations.
-
-Triggers automatically when you:
-- Share mobile app source code (Android, iOS, React Native, Flutter, etc.)
-- Upload screenshots or recordings of mobile UIs
-- Ask for a mobile-specific audit, performance tuning, or platform migration advice
-- Ask a specific question about mobile behavior (e.g. "why is my app janky on Android?") — the skill runs a full audit but focuses on your question first
-
-Example prompts:
-- "Audit my Android app for performance"
-- "How can I make this React Native app more battery efficient?"
-- "Is this iOS architecture ready for scale?"
-
-More skills will be added here over time.
+```mermaid
+flowchart LR
+    A[Install skills] --> B[repo-scout]
+    B --> C[(AGENTS.md profile)]
+    C --> D[bug-hunter]
+    C --> E[branch-storm]
+    C --> F[pixel-audit / frame-budget]
+    C --> G[prompt-compiler]
+    C --> H[shipwright]
+```
 
 ## Installation
 
-Install all skills:
+All skills:
 
 ```bash
 npx skills@latest add kirubel12/skills
 ```
 
-Install a specific skill:
+One skill:
 
 ```bash
-npx skills@latest add kirubel12/skills/elite-adaptive-design-auditor
+npx skills@latest add kirubel12/skills/bug-hunter
 ```
 
-Install the mobile auditor skill:
+## Working style
 
-```bash
-npx skills@latest add kirubel12/skills/elite-mobile-framework-auditor-ultimate
-```
+- Terse by default. Say "explain" or "go deep" for more.
+- A skill asks at most one question at a time, and always offers a default you can accept with "ok".
+- Heavy audits have a quick mode for narrow questions and a full mode for reviews, and the full mode stops for your decision before implementing.
 
-## Usage
+## Evals
 
-Once installed, just talk to your agent naturally. Each skill triggers automatically based on what you ask for — no extra configuration needed.
+`evals/evals.json` has realistic prompts and expectations for each skill, plus prompts that should and should not trigger it. Run each prompt with and without the skill and compare.
+
+## Credits
+
+Built from ideas in public skill collections: the feedback-loop-first debugging approach and the writing guidance in Matt Pocock's `mattpocock/skills`, the PR body format from Dex Horthy's show-me skill (HumanLayer), and the skill-writing guidance in Anthropic's `skill-creator`.
 
 ## License
 

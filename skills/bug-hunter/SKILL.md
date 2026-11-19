@@ -1,5 +1,5 @@
 ---
-name: red-loop
+name: bug-hunter
 description: >
   Debugging loop for anything broken, throwing, failing, flaky or slow in Flutter, Next.js, Laravel or other code.
   Builds a fast pass/fail feedback loop first, then ranks falsifiable hypotheses, fixes the root cause, and adds a
@@ -7,7 +7,7 @@ description: >
   or says it works locally but not in prod, even if they only ask for a quick fix.
 ---
 
-# red-loop
+# bug-hunter
 
 The skill is the feedback loop. With a tight pass/fail signal you will find the cause; without one, reading code is guessing.
 Read `AGENTS.md` (Profile block) for the stack and test commands. Style: terse, evidence over narrative.
@@ -36,7 +36,7 @@ Write 3 to 5 ranked hypotheses before testing any. Each must predict something:
 No prediction means it is a hunch, so sharpen or drop it. Show the ranked list to the user, since they often know what was just deployed. Do not block if they are away.
 
 ### 4. Instrument
-One probe per prediction, one variable at a time. Prefer a debugger or REPL over logs. Tag every temporary log `[RL-xxxx]` so cleanup is one grep. Never "log everything and grep".
+One probe per prediction, one variable at a time. Prefer a debugger or REPL over logs. Tag every temporary log `[BH-xxxx]` so cleanup is one grep. Never "log everything and grep".
 
 ### 5. Fix and lock it
 State the root cause in one sentence plus its evidence **before** editing. If the fix touches shared code or more than 3 files, pause for approval.
@@ -46,7 +46,7 @@ No correct seam is itself a finding: say the architecture prevents locking this 
 ### 6. Clean up
 - [ ] Phase 1 loop is green on the original scenario
 - [ ] Regression test passes, or the missing seam is noted
-- [ ] `grep -r "RL-"` returns nothing
+- [ ] `grep -r "BH-"` returns nothing
 - [ ] Throwaway harnesses deleted
 - [ ] Root cause written for the commit: `fix(scope): <what>` with a body line `Cause: <one sentence>`
 

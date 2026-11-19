@@ -1,0 +1,114 @@
+{
+  "note": "Run each test prompt with the skill installed and without it, then compare against the expectations. should_trigger and should_not_trigger check the description routing.",
+  "skills": {
+    "repo-scout": {
+      "should_trigger": ["set up this repo for agents", "I just cloned this project, map the codebase for me", "create an AGENTS.md for this Flutter app"],
+      "should_not_trigger": ["fix this null error", "review my pull request"],
+      "tests": [
+        {
+          "prompt": "Onboard me to this Next.js repo and set up AGENTS.md.",
+          "expectations": [
+            "Detects Next.js and package manager from files, not by asking",
+            "Prints a short mirror of findings before asking anything",
+            "Marks each command verified or unverified",
+            "Writes CLAUDE.md containing only @AGENTS.md",
+            "Shows the draft before writing"
+          ]
+        }
+      ]
+    },
+    "bug-hunter": {
+      "should_trigger": ["debug this: LateInitializationError on the home screen", "works locally but 500s in production", "why is this list janky"],
+      "should_not_trigger": ["write a PR description", "brainstorm features for my app"],
+      "tests": [
+        {
+          "prompt": "My Laravel queue job sometimes sends the email twice. Debug it.",
+          "expectations": [
+            "Builds or proposes a deterministic red-capable loop before theorising",
+            "Lists 3 to 5 ranked hypotheses that each make a prediction",
+            "States the root cause with evidence before editing",
+            "Uses a tagged [BH-xxxx] for temporary logs and removes them",
+            "Redacts any secrets shown"
+          ]
+        }
+      ]
+    },
+    "branch-storm": {
+      "should_trigger": ["brainstorm features for a habit tracker", "should I use Riverpod or BLoC", "grill me on this plan"],
+      "should_not_trigger": ["fix this crash", "open a PR"],
+      "tests": [
+        {
+          "prompt": "I'm thinking of adding offline sync to my Flutter app. Poke holes in it.",
+          "expectations": [
+            "Chooses Grill mode and says so",
+            "Asks one question at a time with a recommended answer",
+            "Looks up facts in the repo instead of asking",
+            "Ends with a settled-decisions list and waits for confirmation"
+          ]
+        }
+      ]
+    },
+    "pixel-audit": {
+      "should_trigger": ["review this design", "is this button color okay?", "make this screen look more professional"],
+      "should_not_trigger": ["why does the build fail", "write the commit message"],
+      "tests": [
+        {
+          "prompt": "Is the grey text on this white card readable?",
+          "expectations": [
+            "Uses Quick mode: verdict, principle, exact fix value",
+            "Cites the WCAG contrast ratio threshold",
+            "Does not run the full audit",
+            "Mentions at most 2 other P1 issues"
+          ]
+        }
+      ]
+    },
+    "frame-budget": {
+      "should_trigger": ["audit my Flutter app for performance", "why is scrolling janky on Android", "review these mobile screens"],
+      "should_not_trigger": ["review this landing page design", "create a PR"],
+      "tests": [
+        {
+          "prompt": "My Flutter product list drops frames. Audit it.",
+          "expectations": [
+            "Every finding has a file:line",
+            "Asks for or recommends profile-mode measurement on a real device",
+            "Lists other usages before proposing a shared-widget change",
+            "Stops after the plan and asks for a path"
+          ]
+        }
+      ]
+    },
+    "shipwright": {
+      "should_trigger": ["open a PR for this", "commit and push my changes", "write the PR description"],
+      "should_not_trigger": ["why is this failing", "brainstorm names"],
+      "tests": [
+        {
+          "prompt": "Commit this and open a merge request. Tracker is Linear, ticket ENG-42.",
+          "expectations": [
+            "Detects the host from the remote",
+            "Runs a self-review of the diff and the profile's checks",
+            "Uses conventional commit messages",
+            "Includes Closes ENG-42 in the body",
+            "Shows host, base, title and body and waits before creating the MR"
+          ]
+        }
+      ]
+    },
+    "prompt-compiler": {
+      "should_trigger": ["improve this prompt: make the app faster", "write a prompt for an agent to add dark mode", "enhance my prompt"],
+      "should_not_trigger": ["run the tests", "audit my UI"],
+      "tests": [
+        {
+          "prompt": "Make my prompt better: add search to the products page",
+          "expectations": [
+            "Gathers context from the repo and AGENTS.md instead of asking",
+            "Output has a one-sentence goal and checkable acceptance criteria",
+            "Assumptions are listed separately from the prompt",
+            "Does not execute the prompt",
+            "Compiled prompt is not padded"
+          ]
+        }
+      ]
+    }
+  }
+}
