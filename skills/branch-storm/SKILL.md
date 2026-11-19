@@ -48,3 +48,11 @@ What would change my mind: <one observable thing>
 
 ## If the question is about how something should feel or look
 Suggest a throwaway prototype instead of more discussion, and say what question it would answer.
+
+## Save output
+
+Write the result to `<notes_dir>/branch-storm/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- One file per run. Never overwrite an earlier run's file.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.

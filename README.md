@@ -47,6 +47,30 @@ One skill:
 npx skills@latest add kirubel12/skills/bug-hunter
 ```
 
+## Where output goes
+
+Every skill saves its result as a markdown file in the project, in a folder named after the skill. A later session or another agent can read it and pick up where the last one stopped.
+
+```text
+AGENTS.md                      short profile, auto-read by every agent (repo-scout)
+CLAUDE.md                      contains only: @AGENTS.md
+.agent-notes/
+  repo-scout/overview.md       stack, commands, architecture, hot spots (updated in place)
+  bug-hunter/2026-11-19-cart-total.md
+  branch-storm/offline-sync.md
+  pixel-audit/checkout-2026-11-19.md
+  frame-budget/product-list-2026-11-19.md
+  shipwright/feat-cart-fix.md          run record
+  shipwright/feat-cart-fix.body.md     exact PR body
+  prompt-compiler/add-search-2026-11-19.md
+docs/adr/0001-<slug>.md        only for hard-to-reverse decisions (branch-storm offers it)
+```
+
+- Folders are created on first write. One file per run; earlier runs are never overwritten (`overview.md` is the one exception, updated in place).
+- Secrets are redacted before anything is written.
+- Change the location with `notes_dir` in the `AGENTS.md` profile. `repo-scout` asks once whether to commit the notes or git-ignore them.
+- Throwaway artifacts (prototypes, large logs, HTML reports) belong in the OS temp directory, not the repo.
+
 ## Working style
 
 - Terse by default. Say "explain" or "go deep" for more.
@@ -59,7 +83,7 @@ npx skills@latest add kirubel12/skills/bug-hunter
 
 ## Credits
 
-Built from ideas in public skill collections: the feedback-loop-first debugging approach and the writing guidance in Matt Pocock's `mattpocock/skills`, the PR body format from Dex Horthy's show-me skill (HumanLayer), and the skill-writing guidance in Anthropic's `skill-creator`.
+Built from ideas in public skill collections, including the lazy, per-purpose file conventions (`docs/adr/`, scratch folders, temp-dir artifacts): the feedback-loop-first debugging approach and the writing guidance in Matt Pocock's `mattpocock/skills`, the PR body format from Dex Horthy's show-me skill (HumanLayer), and the skill-writing guidance in Anthropic's `skill-creator`.
 
 ## License
 

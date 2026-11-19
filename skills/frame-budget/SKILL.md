@@ -42,3 +42,11 @@ Read the `AGENTS.md` Profile block for stack and commands. Style: terse. Checks 
 - Every finding has a location, evidence and a fix.
 - `flutter analyze` is clean after implemented changes.
 - Shared-widget changes list their other usages.
+
+## Save output
+
+Write the result to `<notes_dir>/frame-budget/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- One file per run. Never overwrite an earlier run's file.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.

@@ -1,5 +1,7 @@
 # Host commands, tracker links, commit spec
 
+Set `BODY_FILE=<notes_dir>/shipwright/<branch-slug>.body.md` (written at the plan gate, see `output-format.md`).
+
 ## Detect the host
 `git remote get-url origin`: contains `github.com` means GitHub; contains `gitlab` (including self-hosted) means GitLab; contains `bitbucket.org` means Bitbucket. Anything else: ask once.
 Base branch: `git symbolic-ref --short refs/remotes/origin/HEAD`, else the profile's `default_branch`.
@@ -7,7 +9,7 @@ Base branch: `git symbolic-ref --short refs/remotes/origin/HEAD`, else the profi
 ## GitHub (`gh`)
 ```bash
 git push -u origin "$BRANCH"
-gh pr create --base "$BASE" --head "$BRANCH" --title "$TITLE" --body-file pr-body.md   # add --draft for drafts
+gh pr create --base "$BASE" --head "$BRANCH" --title "$TITLE" --body-file "$BODY_FILE"   # add --draft for drafts
 gh pr view --web          # open it
 ```
 If `gh` is missing or unauthenticated, print the title and body and the compare URL `https://github.com/<owner>/<repo>/compare/<base>...<branch>?expand=1`.
@@ -16,7 +18,7 @@ If `gh` is missing or unauthenticated, print the title and body and the compare 
 Self-hosted: `glab` reads the host from the remote, or set `GITLAB_HOST`.
 ```bash
 git push -u origin "$BRANCH"
-glab mr create --source-branch "$BRANCH" --target-branch "$BASE" --title "$TITLE" --description "$(cat pr-body.md)" --remove-source-branch   # add --draft for drafts
+glab mr create --source-branch "$BRANCH" --target-branch "$BASE" --title "$TITLE" --description "$(cat "$BODY_FILE")" --remove-source-branch   # add --draft for drafts
 ```
 No `glab`: push with options, `git push -o merge_request.create -o merge_request.target="$BASE" origin "$BRANCH"`, then open the URL GitLab prints.
 
@@ -26,7 +28,7 @@ Parse `<workspace>/<repo>` from the remote URL. Use the REST API; read credentia
 git push -u origin "$BRANCH"
 curl -sS -X POST "https://api.bitbucket.org/2.0/repositories/$WORKSPACE/$REPO/pullrequests" \
   -u "$BITBUCKET_EMAIL:$BITBUCKET_API_TOKEN" -H "Content-Type: application/json" \
-  -d "$(jq -n --arg t "$TITLE" --arg d "$(cat pr-body.md)" --arg s "$BRANCH" --arg b "$BASE" \
+  -d "$(jq -n --arg t "$TITLE" --arg d "$(cat "$BODY_FILE")" --arg s "$BRANCH" --arg b "$BASE" \
       '{title:$t, description:$d, source:{branch:{name:$s}}, destination:{branch:{name:$b}}, close_source_branch:true}')"
 ```
 Fallback with no credentials: print title and body and the URL `https://bitbucket.org/<workspace>/<repo>/pull-requests/new?source=<branch>&dest=<base>`.

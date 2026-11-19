@@ -26,6 +26,8 @@ commands:                                    # mark each: verified | unverified
   lint:    "<cmd>"   # verified
   build:   "<cmd>"   # unverified
 style: terse
+notes_dir: .agent-notes
+notes_git: commit                       # commit | ignore
 ```
 
 ## Architecture
@@ -39,6 +41,9 @@ Generated files, vendored code, migrations already applied.
 
 ## Gotchas
 Project-specific traps only. Example: "Run `dart run build_runner build` after editing models".
+
+## Agent notes
+Skill output is saved to `.agent-notes/<skill>/`. Read a skill's folder before repeating its work.
 
 ## Agent skills
 Installed via the skills CLI. These skills read the Profile block above.

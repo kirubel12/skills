@@ -52,3 +52,11 @@ No correct seam is itself a finding: say the architecture prevents locking this 
 
 ## Why
 A premature hypothesis anchors every later step. Ranked, falsifiable hypotheses and a red-capable loop remove that anchor and make "fixed" a measurement instead of a feeling.
+
+## Save output
+
+Write the result to `<notes_dir>/bug-hunter/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- One file per run. Never overwrite an earlier run's file.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.

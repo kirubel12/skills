@@ -39,3 +39,11 @@ Lens checklists with numbers are in `references/lenses.md`. Read it before audit
 
 ## Why
 Vague critique cannot be acted on or verified. Observed value plus principle plus exact fix can be checked by the next person.
+
+## Save output
+
+Write the result to `<notes_dir>/pixel-audit/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- One file per run. Never overwrite an earlier run's file.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.

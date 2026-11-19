@@ -56,3 +56,11 @@ Changes: added a reproduction requirement, a verifiable done-condition, and a sc
 ## Done when
 - The compiled prompt has a one-sentence goal and at least one pass or fail criterion.
 - Every assumption is listed separately.
+
+## Save output
+
+Write the result to `<notes_dir>/prompt-compiler/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- One file per run. Never overwrite an earlier run's file.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.

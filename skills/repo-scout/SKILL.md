@@ -20,12 +20,13 @@ Questions: ask only for what cannot be detected, one at a time, each with a reco
 1. **Explore.** Follow `references/stack-detection.md`. Also read existing `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, `README.md`.
    For an existing repo, find hot spots: `git log --since=90.days --name-only --pretty=format: | sort | uniq -c | sort -rn | head -15`. Recent churn shows where the work is.
 2. **Mirror.** Print what you found in under 10 lines: stack, commands, host, branch, hot spots, gaps. This is the confirmation step.
-3. **Fill gaps.** Ask one question per unknown field, with a default. Fields: one-line purpose, tracker (`none` | `linear` | `jira` and key prefix), git host if there is no remote, paths agents must not touch.
+3. **Fill gaps.** Ask one question per unknown field, with a default. Fields: one-line purpose, tracker (`none` | `linear` | `jira` and key prefix), git host if there is no remote, paths agents must not touch, and whether agent notes are committed or git-ignored (default: committed, because the notes are the project's memory; if ignored, add `<notes_dir>/` to `.gitignore`).
 4. **Draft.** Fill `references/profile-template.md`. Show the draft and let the user edit it before anything is written.
 5. **Write.**
    - `AGENTS.md` holds the content (Claude Code, Codex, Cursor and others all read it).
    - `CLAUDE.md` contains only `@AGENTS.md`.
    - If `CLAUDE.md` already has real content, offer to move it into `AGENTS.md` (ask once). If `AGENTS.md` exists, update the profile block in place and leave the user's other sections alone.
+   - `<notes_dir>/repo-scout/overview.md` with the longer map (stack, commands, architecture, hot spots, gaps).
    - New empty project: propose the minimal folder layout for the stack, scaffold nothing without a yes.
 6. **Verify.** Run each detected install, lint and test command in its fastest form. Mark it `verified` or `unverified`. A command nobody has seen work is a guess, so label it.
 7. **Report** in three lines: files written, commands verified, open gaps.
@@ -39,3 +40,11 @@ Questions: ask only for what cannot be detected, one at a time, each with a reco
 ## Why these rules
 - Only project-specific facts belong in the profile. Generic advice costs context on every turn and the agent already knows it.
 - Hot spots come from git history because architecture diagrams go stale and commit churn does not.
+
+## Save output
+
+Write the result to `<notes_dir>/repo-scout/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- `overview.md` is updated in place (history lives in git). Never delete the user's own notes.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.

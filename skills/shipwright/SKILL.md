@@ -21,7 +21,7 @@ Commit, push and PR creation are outward-facing. Only do the steps the user aske
 2. **Self-review the diff** against the base branch. Check for: secrets or `.env` values, debug leftovers (`print`, `console.log`, `dd(`, `[BH-` tags), unrelated changes, missing tests, generated files that should not be committed. Fix or report each finding.
 3. **Run the checks** from the profile (lint, test). Report real results. If a check fails, stop and say so, do not open the PR.
 4. **Commit** with conventional commits (spec in the reference). Split unrelated changes into separate commits. Subject in imperative mood, 72 characters or fewer, body explains why. Add any attribution lines the environment instructs, never invent your own.
-5. **Plan gate.** Show host, `head -> base`, PR title, body, ticket link and whether it is a draft. Wait for a yes.
+5. **Plan gate.** Write the PR body and the run record to the notes folder first. Show host, `head -> base`, PR title, body, ticket link and whether it is a draft. Wait for a yes.
 6. **Push and open.** `git push -u origin <branch>`, then create the PR with the host's tool (reference file). Retry network failures up to 4 times with backoff.
 7. **Report** the PR URL, check status and anything left for the user.
 
@@ -32,3 +32,11 @@ Mirror the repository's own template if one exists (headings only; skip any sect
 - Checks passed or the failure is reported.
 - Commits follow the convention and nothing sensitive is in the diff.
 - The PR exists with a title, body and ticket link, and the URL was reported. Or the user chose to stop earlier and the report says where.
+
+## Save output
+
+Write the result to `<notes_dir>/shipwright/` (default `.agent-notes/`; `notes_dir` in the AGENTS.md Profile overrides it). Filename and template: `references/output-format.md`.
+- One file per run. Never overwrite an earlier run's file.
+- Create the folder on first write. Do not mention a missing folder.
+- Redact secrets before writing.
+- Finish with one line: `Saved: <path>`.
